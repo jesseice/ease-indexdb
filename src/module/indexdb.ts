@@ -28,15 +28,58 @@ export const connectDb = async (params: {
 
 /** 插入 */
 export const insertData = async (db: any, tableName: string, data: any[]) => {
-  return new Promise((resolve) => {
-    const dbHandle = db
-      .transaction(tableName, "readwrite")
-      .objectStore(tableName);
-    console.log("[dbHandle] ---> ", dbHandle);
-    console.log("[data] ---> ", data);
-    for (let index = 0; index < data.length; index++) {
-      dbHandle.add(data[index]);
-    }
-    resolve(1);
-  });
+  const dbHandle = db
+    .transaction(tableName, "readwrite")
+    .objectStore(tableName);
+  const res: any = [];
+  let isStop = false;
+  for (let index = 0; index < data.length; index++) {
+    if (isStop) break;
+    const addRes = await new Promise((resolve) => {
+      const res1 = dbHandle.add(data[index]);
+      res1.onsuccess = (e: any) => resolve(e.target.result);
+      res1.onerror = (e: any) => {
+        resolve(e.target.error);
+        isStop = true;
+      };
+    });
+    res.push(addRes);
+  }
+  return res;
+};
+
+/**
+ *
+ * @param db 数据库实例
+ * @param tableName 表名
+ * @param deleteKeys 删除的主键
+ * @param returnType 返回类型 keyToBoolean  返回{[key]: false|true} 默认返回false|true
+ * @returns {Promise<boolean[] | Record<string, boolean>[]>}
+ */
+export const removeData = async (
+  db: any,
+  tableName: string,
+  deleteKeys: string[],
+  returnType: "keyToBoolean" | "default"
+): Promise<boolean[] | Record<string, boolean>[]> => {
+  const dbHandle = db
+    .transaction(tableName, "readwrite")
+    .objectStore(tableName);
+  const res: any = [];
+  let isStop = false;
+  for (let index = 0; index < deleteKeys.length; index++) {
+    const key = deleteKeys[index];
+    if (isStop) break;
+    const addRes = await new Promise((resolve) => {
+      const res1 = dbHandle.delete(key);
+      res1.onsuccess = () =>
+        resolve(returnType === "keyToBoolean" ? { [key]: true } : true);
+      res1.onerror = () => {
+        resolve(returnType === "keyToBoolean" ? { [key]: false } : false);
+        isStop = true;
+      };
+    });
+    res.push(addRes);
+  }
+  return res;
 };

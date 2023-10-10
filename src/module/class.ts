@@ -1,4 +1,4 @@
-import { connectDb, insertData } from "./indexdb";
+import { connectDb, insertData, removeData } from "./indexdb";
 
 export class EIndexdb {
   options;
@@ -18,5 +18,12 @@ export class EIndexdb {
   }
   async addData(tableName: string, data: any[]) {
     return await insertData(this.dbInstance, tableName, data);
+  }
+  async deleteData(
+    tableName: string,
+    keys: any[],
+    returnType: "keyToBoolean" | "default" = "default"
+  ) {
+    return await removeData(this.dbInstance, tableName, keys, returnType);
   }
 }

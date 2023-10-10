@@ -10,16 +10,21 @@
     <script>
       const dbInstance = new eIndexdb.EIndexdb({
         name: "abc",
-        version: 4,
+        version: 6,
         initTableName: ["db1", "db2"],
-        options: { keyPath: "id" },
+        configs: { keyPath: "id" },
       });
-      dbInstance.connect().then((e) => {
-        const insertData = new Array(50).fill(null).map((v, index) => ({
-          id: index,
-          time: `${new Date().getTime()}${index}`,
-        }));
-        dbInstance.addData("db1", insertData);
+      dbInstance.connect().then(async (e) => {
+        // console.log("[dbInstance] ---> ", dbInstance);
+        // const insertData = new Array(50).fill(null).map((v, index) => ({
+        //   id: index,
+        //   time: `${new Date().getTime()}${index}`,
+        // }));
+        // const addRes = await dbInstance.addData("db1", insertData);
+        // console.log('[addRes] ---> ', addRes)
+
+        // const removeRes = await dbInstance.deleteData("db1", [0]);
+        // console.log("[removeRes] ---> ", removeRes);
       });
     </script>
   </body>
