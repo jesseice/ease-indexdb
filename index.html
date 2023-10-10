@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="./dist/eIndexdb.umd.js"></script>
+    <script>
+      const dbInstance = new eIndexdb.EIndexdb({
+        name: "abc",
+        version: 4,
+        initTableName: ["db1", "db2"],
+        options: { keyPath: "id" },
+      });
+      dbInstance.connect().then((e) => {
+        const insertData = new Array(50).fill(null).map((v, index) => ({
+          id: index,
+          time: `${new Date().getTime()}${index}`,
+        }));
+        dbInstance.addData("db1", insertData);
+      });
+    </script>
+  </body>
+</html>

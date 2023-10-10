@@ -1,0 +1,30 @@
+{
+  "name": "ease-indexdb",
+  "private": false,
+  "version": "0.1.4",
+  "type": "module",
+  "module": "./dist/myLib.es.js",
+  "main": "./dist/myLib.es.js",
+  "description": "easier use of indexDb",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && tsc -p tsconfig.build.json",
+    "preview": "vite preview"
+  },
+  "exports": {
+    "types": "./dist/index.d.ts",
+    "import": "./dist/index.es.js",
+    "require": "./dist/myLib.umd.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "typescript": "^5.0.2",
+    "vite": "^4.4.5"
+  },
+  "dependencies": {
+    "vite-plugin-dts": "^3.6.0"
+  }
+}
