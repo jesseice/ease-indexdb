@@ -3,8 +3,8 @@
   "private": false,
   "version": "1.0.0",
   "type": "module",
-  "module": "./dist/myLib.es.js",
-  "main": "./dist/myLib.es.js",
+  "module": "./dist/eIndexdb.es.js",
+  "main": "./dist/eIndexdb.es.js",
   "description": "easier use of indexdb",
   "homepage": "https://github.com/jesseice/ease-indexdb",
   "license": "MIT",
@@ -20,9 +20,8 @@
     "preview": "vite preview"
   },
   "exports": {
-    "types": "./dist/index.d.ts",
-    "import": "./dist/index.es.js",
-    "require": "./dist/myLib.umd.js"
+    "import": "./dist/eIndexdb.es.js",
+    "require": "./dist/eIndexdb.umd.js"
   },
   "files": [
     "dist",
