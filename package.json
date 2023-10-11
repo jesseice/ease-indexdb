@@ -1,12 +1,19 @@
 {
   "name": "ease-indexdb",
   "private": false,
-  "version": "0.1.4",
+  "version": "1.0.0",
   "type": "module",
   "module": "./dist/myLib.es.js",
   "main": "./dist/myLib.es.js",
-  "description": "easier use of indexDb",
+  "description": "easier use of indexdb",
+  "homepage": "https://github.com/jesseice/ease-indexdb",
   "license": "MIT",
+  "keywords": [
+    "indexdb",
+    "ease",
+    "ease-indexdb",
+    "db"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vite build && tsc -p tsconfig.build.json",
@@ -18,7 +25,8 @@
     "require": "./dist/myLib.umd.js"
   },
   "files": [
-    "dist"
+    "dist",
+    "README.md"
   ],
   "devDependencies": {
     "typescript": "^5.0.2",

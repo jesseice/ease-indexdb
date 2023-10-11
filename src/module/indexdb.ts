@@ -15,7 +15,11 @@ export const connectDb = async (params: {
         const db = e.target.result;
         for (let index = 0; index < initTableName.length; index++) {
           const key = initTableName[index];
-          db.createObjectStore(key, options);
+          try {
+            db.createObjectStore(key, options);
+          } catch (error) {
+            continue;
+          }
         }
       };
     });
@@ -49,7 +53,7 @@ export const insertData = async (db: any, tableName: string, data: any[]) => {
 };
 
 /**
- *
+ * 删除数据
  * @param db 数据库实例
  * @param tableName 表名
  * @param deleteKeys 删除的主键
@@ -59,13 +63,17 @@ export const insertData = async (db: any, tableName: string, data: any[]) => {
 export const removeData = async (
   db: any,
   tableName: string,
-  deleteKeys: string[],
+  deleteKeys: string[] | string,
   returnType: "keyToBoolean" | "default"
-): Promise<boolean[] | Record<string, boolean>[]> => {
+): Promise<boolean[] | Record<string, boolean>[] | boolean> => {
   const dbHandle = db
     .transaction(tableName, "readwrite")
     .objectStore(tableName);
   const res: any = [];
+  if (!Array.isArray(deleteKeys)) {
+    dbHandle.delete(deleteKeys);
+    return true;
+  }
   let isStop = false;
   for (let index = 0; index < deleteKeys.length; index++) {
     const key = deleteKeys[index];
@@ -82,4 +90,72 @@ export const removeData = async (
     res.push(addRes);
   }
   return res;
+};
+
+/**
+ * 修改数据库数据
+ * @param db 数据库实例
+ * @param tableName 表名
+ * @param data 修改的数据 可以数组 或者直接修改后的对象
+ * @returns
+ */
+export const modifyData = (db: any, tableName: string, data: any[] | any) => {
+  const objectStore = db
+    .transaction([tableName], "readwrite")
+    .objectStore(tableName);
+  try {
+    if (Array.isArray(data)) {
+      for (let index = 0; index < data.length; index++) {
+        try {
+          objectStore.put(data[index]);
+        } catch (error) {
+          continue;
+        }
+      }
+    } else {
+      objectStore.put(data);
+      return true;
+    }
+  } catch (error: any) {
+    console.error(error.message);
+    return false;
+  }
+};
+
+/**
+ *
+ * @param db 数据库实例
+ * @param tableName 表名
+ * @param condition 查询条件
+ * @returns
+ */
+export const findDataFn = async (db: any, tableName: string, key: string) => {
+  const res = await new Promise((resolve) => {
+    try {
+      const temp = db.transaction([tableName]).objectStore(tableName).get(key);
+      temp.onsuccess = (e: any) => {
+        resolve(e.target.result);
+      };
+      temp.onerror = () => {
+        resolve(null);
+      };
+    } catch (error: any) {
+      console.error("error.message", error.message);
+      resolve(null);
+    }
+  });
+  return res;
+};
+
+export const getAllDataFn = (db: any, tableName: string) => {
+  return new Promise((resolve) => {
+    try {
+      const temp = db.transaction([tableName]).objectStore(tableName).getAll();
+      temp.onsuccess = (e: any) => resolve(e.target.result);
+      temp.onerror = () => resolve(null);
+    } catch (error: any) {
+      console.error("error.message", error.message);
+      resolve(null);
+    }
+  });
 };

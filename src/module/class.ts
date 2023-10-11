@@ -1,4 +1,11 @@
-import { connectDb, insertData, removeData } from "./indexdb";
+import {
+  connectDb,
+  insertData,
+  removeData,
+  modifyData,
+  findDataFn,
+  getAllDataFn,
+} from "./indexdb";
 
 export class EIndexdb {
   options;
@@ -25,5 +32,15 @@ export class EIndexdb {
     returnType: "keyToBoolean" | "default" = "default"
   ) {
     return await removeData(this.dbInstance, tableName, keys, returnType);
+  }
+
+  updateData(tableName: string, data: any[] | any) {
+    return modifyData(this.dbInstance, tableName, data);
+  }
+  findData(tableName: string, key: string) {
+    return findDataFn(this.dbInstance, tableName, key);
+  }
+  getAllData(tableName: string) {
+    return getAllDataFn(this.dbInstance, tableName);
   }
 }

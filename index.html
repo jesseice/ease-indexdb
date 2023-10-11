@@ -10,7 +10,7 @@
     <script>
       const dbInstance = new eIndexdb.EIndexdb({
         name: "abc",
-        version: 6,
+        version: 1,
         initTableName: ["db1", "db2"],
         configs: { keyPath: "id" },
       });
@@ -23,8 +23,17 @@
         // const addRes = await dbInstance.addData("db1", insertData);
         // console.log('[addRes] ---> ', addRes)
 
-        // const removeRes = await dbInstance.deleteData("db1", [0]);
+        // const removeRes = await dbInstance.deleteData("db1", -1);
         // console.log("[removeRes] ---> ", removeRes);
+
+        // const res = dbInstance.updateData("db1", { id: 3, time: 1234 });
+        // console.log("[res] ---> ", res);
+
+        // const res = await dbInstance.findData("db1", 1);
+        // console.log("[res] ---> ", res);
+
+        const res = await dbInstance.getAllData("db1");
+        console.log("[res] ---> ", res);
       });
     </script>
   </body>
