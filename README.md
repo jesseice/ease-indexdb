@@ -1,12 +1,9 @@
 # ease-indexdb 1.0.0
 
----
-
 easier use of indexdb
 
 ## Installation
 
----
 
 ```shell
 $ npm i ease-indexdb
@@ -14,8 +11,6 @@ $ yarn add ease-indexdb
 ```
 
 ## USE
-
----
 
 ### javascript
 
@@ -56,7 +51,6 @@ edb.connect().then(async (e) => {
 
 ## TYPE
 
----
 
 |   方法名   |                            参数                             |               作用               |        返回值        |
 | :--------: | :---------------------------------------------------------: | :------------------------------: | :------------------: |
