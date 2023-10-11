@@ -1,10 +1,11 @@
 import {
   connectDb,
   insertData,
-  removeData,
+  deleteDataFn,
   modifyData,
   findDataFn,
   getAllDataFn,
+  clearAllData,
 } from "./indexdb";
 
 export class EIndexdb {
@@ -23,15 +24,15 @@ export class EIndexdb {
     this.dbInstance = await connectDb(this.options);
     return this.dbInstance;
   }
-  async addData(tableName: string, data: any[]) {
-    return await insertData(this.dbInstance, tableName, data);
+  addData(tableName: string, data: any[]) {
+    return insertData(this.dbInstance, tableName, data);
   }
   async deleteData(
     tableName: string,
     keys: any[],
     returnType: "keyToBoolean" | "default" = "default"
   ) {
-    return await removeData(this.dbInstance, tableName, keys, returnType);
+    return await deleteDataFn(this.dbInstance, tableName, keys, returnType);
   }
 
   updateData(tableName: string, data: any[] | any) {
@@ -42,5 +43,8 @@ export class EIndexdb {
   }
   getAllData(tableName: string) {
     return getAllDataFn(this.dbInstance, tableName);
+  }
+  clear(tableName: string) {
+    return clearAllData(this.dbInstance, tableName);
   }
 }

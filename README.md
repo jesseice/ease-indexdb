@@ -48,6 +48,9 @@ edb.connect().then(async (e) => {
 
   const allData = await edb.getAllData("db1");
   console.log("[allData] ---> ", allData);
+
+  const clearRes = await edb.clear("db1");
+  console.log("[clearRes] ---> ", clearRes);
 });
 ```
 
@@ -55,11 +58,12 @@ edb.connect().then(async (e) => {
 
 ---
 
-| 方法名     |                            参数                             |                             作用 |
-| :--------- | :---------------------------------------------------------: | -------------------------------: |
-| connect    |                             无                              | 用于连接数据库 获取 db 实例 异步 |
-| addData    |            tabelName: 表名, data: 插入数据 数组             |                         添加数据 |
-| deleteData |                 tabelName: 表名, key: 键值                  |                         删除数据 |
-| updateData | tabelName: 表名, data: 需要更新的数据数组 或者 直接数据对象 |                         更新数据 |
-| findData   |                 tabelName: 表名, key: 键值                  |                     查找某个数据 |
-| getAllData |                       tabelName: 表名                       |                     获取全部数据 |
+|   方法名   |                            参数                             |               作用               |        返回值        |
+| :--------: | :---------------------------------------------------------: | :------------------------------: | :------------------: |
+|  connect   |                             无                              | 用于连接数据库 获取 db 实例 异步 | Promise<IDBDatabase> |
+|  addData   |            tabelName: 表名, data: 插入数据 数组             |             添加数据             |     Promise<T[]>     |
+| deleteData |                 tabelName: 表名, key: 键值                  |             删除数据             |   Promise<boolean>   |
+| updateData | tabelName: 表名, data: 需要更新的数据数组 或者 直接数据对象 |             更新数据             |       boolean        |
+|  findData  |                 tabelName: 表名, key: 键值                  |           查找某个数据           |   Promise<object>    |
+| getAllData |                       tabelName: 表名                       |           获取全部数据           |     Promise<T[]>     |
+|   clear    |                       tabelName: 表名                       |         删除该表全部数据         |   Promise<boolean>   |

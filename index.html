@@ -16,12 +16,12 @@
       });
       dbInstance.connect().then(async (e) => {
         // console.log("[dbInstance] ---> ", dbInstance);
-        // const insertData = new Array(50).fill(null).map((v, index) => ({
-        //   id: index,
-        //   time: `${new Date().getTime()}${index}`,
-        // }));
-        // const addRes = await dbInstance.addData("db1", insertData);
-        // console.log('[addRes] ---> ', addRes)
+        const insertData = new Array(50).fill(null).map((v, index) => ({
+          id: index,
+          time: `${new Date().getTime()}${index}`,
+        }));
+        const addRes = await dbInstance.addData("db1", insertData);
+        console.log('[addRes] ---> ', addRes)
 
         // const removeRes = await dbInstance.deleteData("db1", -1);
         // console.log("[removeRes] ---> ", removeRes);
@@ -32,8 +32,11 @@
         // const res = await dbInstance.findData("db1", 1);
         // console.log("[res] ---> ", res);
 
-        const res = await dbInstance.getAllData("db1");
-        console.log("[res] ---> ", res);
+        // const res = await dbInstance.getAllData("db1");
+        // console.log("[res] ---> ", res);
+
+        // const clearRes = await dbInstance.clear("db1");
+        // console.log("[clearRes] ---> ", clearRes);
       });
     </script>
   </body>

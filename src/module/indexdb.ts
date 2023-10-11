@@ -60,7 +60,7 @@ export const insertData = async (db: any, tableName: string, data: any[]) => {
  * @param returnType 返回类型 keyToBoolean  返回{[key]: false|true} 默认返回false|true
  * @returns {Promise<boolean[] | Record<string, boolean>[]>}
  */
-export const removeData = async (
+export const deleteDataFn = async (
   db: any,
   tableName: string,
   deleteKeys: string[] | string,
@@ -156,6 +156,23 @@ export const getAllDataFn = (db: any, tableName: string) => {
     } catch (error: any) {
       console.error("error.message", error.message);
       resolve(null);
+    }
+  });
+};
+
+/** 清除表数据 */
+export const clearAllData = (db: any, tableName: string) => {
+  return new Promise((resolve) => {
+    try {
+      const temp = db
+        .transaction([tableName], "readwrite")
+        .objectStore(tableName)
+        .clear();
+      temp.onsuccess = () => resolve(true);
+      temp.onerror = () => resolve(false);
+    } catch (error: any) {
+      console.error("error.message", error.message);
+      resolve(false);
     }
   });
 };
