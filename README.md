@@ -49,6 +49,19 @@ edb.connect().then(async (e) => {
 });
 ```
 
+### ts
+```typescript
+import { EIndexdb } from "ease-indexdb";
+// 引入类型获取类型提示
+import mainType from "ease-indexdb/dist/main.d.ts";
+const edb: mainType.EIndexdb = new EIndexdb({
+  name: "abc",
+  version: 2,
+  initTableName: ["db1", "db2"],
+  configs: { keyPath: "id" },
+});
+```
+
 ## TYPE
 
 
