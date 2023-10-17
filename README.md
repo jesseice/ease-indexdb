@@ -1,4 +1,4 @@
-# ease-indexdb 1.0.0
+# ease-indexdb 1.0.3
 
 easier use of indexdb
 

@@ -1,7 +1,7 @@
 {
   "name": "ease-indexdb",
   "private": false,
-  "version": "1.0.1",
+  "version": "1.0.3",
   "type": "module",
   "module": "./dist/eIndexdb.es.js",
   "main": "./dist/eIndexdb.es.js",
